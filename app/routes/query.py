@@ -1,14 +1,16 @@
 """Query endpoint."""
+from typing import Optional
+
 from fastapi import APIRouter, HTTPException
 from app.models.request import QueryRequest
 from app.models.response import QueryResponse
 from app.utils.logger import get_logger
-
+from app.rag.pipeline import RagPipeline
 logger = get_logger(__name__)
 router = APIRouter()
 
 # Pipeline instance (injected by main.py)
-pipeline = None
+pipeline: Optional[RagPipeline] = None
 
 
 @router.post("/query", response_model=QueryResponse)
