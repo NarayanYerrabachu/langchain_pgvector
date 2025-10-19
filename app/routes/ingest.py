@@ -1,6 +1,6 @@
 """Document ingestion endpoints."""
 from fastapi import APIRouter, File, UploadFile, HTTPException
-from typing import List
+from typing import List, Optional
 
 from langchain_core.documents import Document
 
@@ -8,6 +8,7 @@ from app.models.request import DocumentIngestRequest, WebScrapingRequest
 from app.models.response import IngestResponse
 from app.loaders.pdf import PDFProcessor
 from app.loaders.web import WebScraper
+from app.rag import RagPipeline
 from app.utils.logger import get_logger
 
 from pathlib import Path
@@ -17,7 +18,7 @@ logger = get_logger(__name__)
 router = APIRouter()
 
 # Pipeline instance (injected by main.py)
-pipeline = None
+pipeline: Optional[RagPipeline] = None
 TEMP_DIR = Path("./temp_uploads")
 
 
